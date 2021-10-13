@@ -1,0 +1,1165 @@
+import configparser
+import discord
+import random
+import asyncio
+import time
+#from numpy import *
+
+zaeb = 0
+client = discord.Client(intents = discord.Intents.all())
+config = configparser.ConfigParser()
+global configPath
+configPath = "sovietconfig.ini"
+config.read(configPath, encoding='Windows 1251')
+global r
+r = []
+global d
+d = []
+"""
+for num in range(51):
+    config["d" + str(num)]["armest"] = str(num)
+    with open(configPath, 'w') as configfile:
+        config.write(configfile)
+"""
+async def confread():
+    config.read(configPath, encoding='Windows 1251')
+    global khod
+    khod = int(config["DEFAULT"]["khod"])
+    global r
+    r = []
+    global d
+    d = []
+    print("ccccerf")
+    for num in range(51):
+        dwor = Dworin(config[f'd{num}'])
+        dwor.nameing()
+        d.append(dwor)
+    for num in range(51):
+        reg = Region(config[f'r{num}'])
+        """
+        chid = discord.utils.get(ser.channels, name=str(num))
+        config["r"+str(num)]["chid"] = str(chid.id)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+        """
+        reg.dworing()
+        
+        r.append(reg)
+    for dwor in d:
+        dwor.reging()
+async def khoding():
+    global khod
+    khod+=1
+    config["DEFAULT"]["khod"] = str(khod)
+    with open(configPath, 'w') as configfile:
+                config.write(configfile)
+    for reg in r:
+        reg.stasing()
+        await reg.stroing()
+        reg.proizvoding()
+    for dwor in d:
+        dwor.naloging()
+        await dwor.finansing()
+        await dwor.dostaving()
+    for reg in r:
+        reg.naloging()
+        reg.nasing()
+class Region(object):
+    def __init__(self, shit):
+        self.name = str(shit["name"])
+        self.num = int(shit["num"])
+        self.chid = int(shit["chid"])
+        self.dvorn = int(shit["dvorn"])
+        self.tipe = str(shit["tipe"])
+        self.nal = int(shit["nal"])
+        self.ras = int(shit["ras"])
+        self.nas = int(shit["nas"])
+        self.vnas = float(shit["vnas"])
+        self.stas = float(shit["stas"])
+
+        self.drug = int(shit["drug"])
+        self.zhel = int(shit["zhel"])
+        self.myed = int(shit["myed"])
+        self.olov = int(shit["olov"])
+        self.ugol = int(shit["ugol"])
+        self.drew = int(shit["drew"])
+        self.torf = int(shit["torf"])
+        self.myas = int(shit["myas"])
+        self.mekh = int(shit["mekh"])
+        self.rast = int(shit["rast"])
+        self.dosp = int(shit["dosp"])
+        self.inst = int(shit["inst"])
+        self.skot = int(shit["skot"])
+
+        self.drugur = int(shit["drugur"])
+        self.zhelur = int(shit["zhelur"])
+        self.myedur = int(shit["myedur"])
+        self.olovur = int(shit["olovur"])
+        self.ugolur = int(shit["ugolur"])
+        self.drewur = int(shit["drewur"])
+        self.torfur = int(shit["torfur"])
+        self.myasur = int(shit["myasur"])
+        self.mekhur = int(shit["mekhur"])
+        self.rastur = int(shit["rastur"])
+        self.dospur = int(shit["dospur"])
+        self.instur = int(shit["instur"])
+        self.skotur = int(shit["skotur"])
+
+        self.drugst = int(shit["drugst"])
+        self.zhelst = int(shit["zhelst"])
+        self.myedst = int(shit["myedst"])
+        self.olovst = int(shit["olovst"])
+        self.ugolst = int(shit["ugolst"])
+        self.drewst = int(shit["drewst"])
+        self.torfst = int(shit["torfst"])
+        self.myasst = int(shit["myasst"])
+        self.mekhst = int(shit["mekhst"])
+        self.rastst = int(shit["rastst"])
+        self.dospst = int(shit["dospst"])
+        self.instst = int(shit["instst"])
+        self.skotst = int(shit["skotst"])
+
+        self.koef = int(20*self.stas)
+    dwor = 0
+
+
+    def naeming(self, chto):
+        chto = chto.split()
+        chto[0]=int(chto[0])
+        print(chto)
+        vnas = int(self.nas*self.vnas)
+        mnas = self.nas-vnas
+        if self.dwor.armest != self.num:
+            return "Ваше войско не здесь, чтобы собрать пополнение."
+        if chto[1] == "ополчения" and vnas>=chto[0]*50:
+            self.dwor.kres+=chto[0]
+            config["d"+str(self.dwor.num)]["kres"] = str(self.dwor.kres)
+        elif chto[1] == "пехоты" and vnas>=chto[0]*50 and self.dwor.dosp>=40*chto[0] and self.dwor.inst>=50*chto[0]:
+            self.dwor.pekh+=chto[0]
+            self.dwor.dosp-=40*chto[0]
+            self.dwor.inst-=50*chto[0]
+            config["d"+str(self.dwor.num)]["pekh"] = str(self.dwor.pekh)
+        elif chto[1] == "копейщиков" and vnas>=chto[0]*50 and self.dwor.dosp>=35*chto[0] and self.dwor.inst>=50*chto[0]:
+            self.dwor.kope+=chto[0]
+            self.dwor.dosp-=35*chto[0]
+            self.dwor.inst-=50*chto[0]
+            config["d"+str(self.dwor.num)]["kope"] = str(self.dwor.kope)
+        elif chto[1] == "лучников" and vnas>=chto[0]*50 and self.dwor.dosp>=25*chto[0] and self.dwor.inst>=50*chto[0]:
+            self.dwor.luch+=chto[0]
+            self.dwor.dosp-=25*chto[0]
+            self.dwor.inst-=50*chto[0]
+            config["d"+str(self.dwor.num)]["luch"] = str(self.dwor.luch)
+        elif chto[1] == "кавалерии" and vnas>=chto[0]*50 and self.dwor.dosp>=50*chto[0] and self.dwor.inst>=50*chto[0] and self.dwor.skot>=50*chto[0]:
+            self.dwor.kava+=chto[0]
+            self.dwor.dosp-=50*chto[0]
+            self.dwor.inst-=50*chto[0]
+            self.dwor.skot-=50*chto[0]
+            config["d"+str(self.dwor.num)]["kava"] = str(self.dwor.kava)
+            config["d"+str(self.dwor.num)]["skot"] = str(self.dwor.skot)
+        else:
+            return "У нас здесь нет такой возможности."
+        vnas-=chto[0]*50
+        self.nas-=chto[0]*50
+        config["d"+str(self.dwor.num)]["inst"] = str(self.dwor.inst)
+        config["d"+str(self.dwor.num)]["dosp"] = str(self.dwor.dosp)
+        self.vnas = round(vnas / self.nas, 4)
+        config["r"+str(self.num)]["nas"] = str(self.nas)
+        config["r"+str(self.num)]["vnas"] = str(self.vnas)
+        return "Наберем лучших из лучших."
+
+    def ottdaching(self, chto):
+        chto = chto.split()
+        chto[0]=int(chto[0])
+        print(chto)
+        if chto[1] == "драгоценностей" and self.dwor.drug >= chto[0]:
+            self.drug += chto[0]
+            self.dwor.drug -= chto[0]
+            config["r"+str(self.num)]["drug"] = str(self.drug)
+            config["d"+str(self.dwor.num)]["drug"] = str(self.dwor.drug)
+        elif chto[1] == "железа" and self.dwor.zhel >= chto[0]:
+            self.zhel = int(config["r" + str(self.num)]["zhel"])
+            self.zhel += chto[0]
+            self.dwor.zhel -= chto[0]
+            self.inst = unnoling(self.instur*10) - self.zheling()
+            config["r" + str(self.num)]["inst"] = str(self.inst)
+            self.zhel -= self.inst
+            config["r" + str(self.num)]["zhel"] = str(self.zhel)
+            config["d"+str(self.dwor.num)]["zhel"] = str(self.dwor.zhel)
+        elif chto[1] == "олова" and self.dwor.olov >= chto[0]:
+            self.olov = int(config["r" + str(self.num)]["olov"])
+            self.myed = int(config["r" + str(self.num)]["myed"])
+            self.dwor.olov -= chto[0]
+            self.olov += chto[0]
+            self.dosp = unnoling(self.dospur*10) - self.bronzing()
+            config["r" + str(self.num)]["dosp"] = str(self.dosp)
+            self.olov -= self.dosp
+            self.myed -= self.dosp*2
+            config["r" + str(self.num)]["myed"] = str(self.myed)
+            config["r"+str(self.num)]["olov"] = str(self.olov)
+            config["d"+str(self.dwor.num)]["olov"] = str(self.dwor.olov)
+        elif chto[1] == "меди" and self.dwor.myed >= chto[0]:
+            self.olov = int(config["r" + str(self.num)]["olov"])
+            self.myed = int(config["r" + str(self.num)]["myed"])
+            self.dwor.myed -= chto[0]
+            self.myed += chto[0]
+            self.dosp = unnoling(self.dospur*10) - self.bronzing()
+            config["r" + str(self.num)]["dosp"] = str(self.dosp)
+            self.olov -= self.dosp
+            self.myed -= self.dosp*2
+            config["r" + str(self.num)]["olov"] = str(self.olov)
+            config["r"+str(self.num)]["myed"] = str(self.myed)
+            config["d"+str(self.dwor.num)]["myed"] = str(self.dwor.myed)
+        elif chto[1] == "угля" and self.dwor.ugol >= chto[0]:
+            self.dwor.ugol -= chto[0]
+            self.ugol += chto[0]
+            config["r"+str(self.num)]["ugol"] = str(self.ugol)
+            config["d"+str(self.dwor.num)]["ugol"] = str(self.dwor.ugol)
+        elif chto[1] == "древесины" and self.dwor.drew >= chto[0]:
+            self.dwor.drew -= chto[0]
+            self.drew += chto[0]
+            config["r"+str(self.num)]["drew"] = str(self.drew)
+            config["d"+str(self.dwor.num)]["drew"] = str(self.dwor.drew)
+        elif chto[1] == "торфа" and self.dwor.torf >= chto[0]:
+            self.dwor.torf -= chto[0]
+            self.torf += chto[0]
+            config["r"+str(self.num)]["torf"] = str(self.torf)
+            config["d"+str(self.dwor.num)]["torf"] = str(self.dwor.torf)
+        elif chto[1] == "мяса" and self.dwor.myas >= chto[0]:
+            self.dwor.myas -= chto[0]
+            self.myas += chto[0]
+            config["r"+str(self.num)]["myas"] = str(self.myas)
+            config["d"+str(self.dwor.num)]["myas"] = str(self.dwor.myas)
+        elif chto[1] == "меха" and self.dwor.mekh >= chto[0]:
+            self.dwor.mekh -= chto[0]
+            self.mekh += chto[0]
+            config["r"+str(self.num)]["mekh"] = str(self.mekh)
+            config["d"+str(self.dwor.num)]["mekh"] = str(self.dwor.mekh)
+        elif chto[1] == "зерна" and self.dwor.rast >= chto[0]:
+            self.dwor.rast -= chto[0]
+            self.rast += chto[0]
+            config["r"+str(self.num)]["rast"] = str(self.rast)
+            config["d"+str(self.dwor.num)]["rast"] = str(self.dwor.rast)
+        elif chto[1] == "животины" and self.dwor.skot >= chto[0]:
+            self.dwor.skot -= chto[0]
+            self.skot += chto[0]
+            config["r"+str(self.num)]["skot"] = str(self.skot)
+            config["d"+str(self.dwor.num)]["skot"] = str(self.dwor.skot)
+        elif chto[1] == "доспехов" and self.dwor.dosp >= chto[0]:
+            self.dwor.dosp -= chto[0]
+            self.dosp += chto[0]
+            config["r"+str(self.num)]["dosp"] = str(self.dosp)
+            config["d"+str(self.dwor.num)]["dosp"] = str(self.dwor.dosp)
+        elif chto[1] == "орудий" and self.dwor.inst >= chto[0]:
+            self.dwor.inst -= chto[0]
+            self.inst += chto[0]
+            config["r"+str(self.num)]["inst"] = str(self.inst)
+            config["d"+str(self.dwor.num)]["inst"] = str(self.dwor.inst)
+        else:
+            return "Извините, у нас такого нет."
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+        return "Как пожелаете."
+    def getting(self, chto):
+        chto = chto.split()
+        chto[0]=int(chto[0])
+        print(chto)
+        if chto[1] == "драгоценностей" and self.drug >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.drug -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.drug += chto[0]
+            config["r"+str(self.num)]["drug"] = str(self.drug)
+            config["d"+str(self.dwor.num)]["drug"] = str(self.dwor.drug)
+        elif chto[1] == "железа" and self.zhel >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.zhel -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.zhel += chto[0]
+            config["r"+str(self.num)]["zhel"] = str(self.zhel)
+            config["d"+str(self.dwor.num)]["zhel"] = str(self.dwor.zhel)
+        elif chto[1] == "олова" and self.olov >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.olov -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.olov += chto[0]
+            config["r"+str(self.num)]["olov"] = str(self.olov)
+            config["d"+str(self.dwor.num)]["olov"] = str(self.dwor.olov)
+        elif chto[1] == "меди" and self.myed >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.myed -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.myed += chto[0]
+            config["r"+str(self.num)]["myed"] = str(self.myed)
+            config["d"+str(self.dwor.num)]["myed"] = str(self.dwor.myed)
+        elif chto[1] == "угля" and self.ugol >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.ugol -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.ugol += chto[0]
+            config["r"+str(self.num)]["ugol"] = str(self.ugol)
+            config["d"+str(self.dwor.num)]["ugol"] = str(self.dwor.ugol)
+        elif chto[1] == "древесины" and self.drew >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.drew -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.drew += chto[0]
+            config["r"+str(self.num)]["drew"] = str(self.drew)
+            config["d"+str(self.dwor.num)]["drew"] = str(self.dwor.drew)
+        elif chto[1] == "торфа" and self.torf >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.torf -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.torf += chto[0]
+            config["r"+str(self.num)]["torf"] = str(self.torf)
+            config["d"+str(self.dwor.num)]["torf"] = str(self.dwor.torf)
+        elif chto[1] == "мяса" and self.myas >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.myas -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.myas += chto[0]
+            config["r"+str(self.num)]["myas"] = str(self.myas)
+            config["d"+str(self.dwor.num)]["myas"] = str(self.dwor.myas)
+        elif chto[1] == "меха" and self.mekh >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.mekh -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.mekh += chto[0]
+            config["r"+str(self.num)]["mekh"] = str(self.mekh)
+            config["d"+str(self.dwor.num)]["mekh"] = str(self.dwor.mekh)
+        elif chto[1] == "зерна" and self.rast >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.rast -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.rast += chto[0]
+            config["r"+str(self.num)]["rast"] = str(self.rast)
+            config["d"+str(self.dwor.num)]["rast"] = str(self.dwor.rast)
+        elif chto[1] == "животины" and self.skot >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.skot -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.skot += chto[0]
+            config["r"+str(self.num)]["skot"] = str(self.skot)
+            config["d"+str(self.dwor.num)]["skot"] = str(self.dwor.skot)
+        elif chto[1] == "доспехов" and self.dosp >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.dosp -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.dosp += chto[0]
+            self.dospur -= 1
+            self.dospst += 1
+            config["r"+str(self.num)]["dosp"] = str(self.dosp)
+            config["r"+str(self.num)]["dospur"] = str(self.dospur)
+            config["r"+str(self.num)]["dospst"] = str(self.dospst)
+            config["d"+str(self.dwor.num)]["dosp"] = str(self.dwor.dosp)
+        elif chto[1] == "орудий" and self.inst >= chto[0] and self.dwor.kazn >= chto[0]*20:
+            self.inst -= chto[0]
+            self.dwor.kazn-=chto[0]*20
+            self.dwor.inst += chto[0]
+            self.instur -= 1
+            self.instst += 1
+            config["r"+str(self.num)]["inst"] = str(self.inst)
+            config["r"+str(self.num)]["instur"] = str(self.instur)
+            config["r"+str(self.num)]["instst"] = str(self.instst)
+            config["d"+str(self.dwor.num)]["inst"] = str(self.dwor.inst)
+        else:
+            return "Извините, мы не можем себе такое позволить."
+        print(self.dwor.kazn)
+        config["d"+str(self.dwor.num)]["kazn"] = str(self.dwor.kazn)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+        return "Всё лучшее для нашего господина."
+    def naloging(self):
+        self.nal = self.nas/10
+        self.nal = int(self.nal)
+        config["r"+str(self.num)]["nal"] = str(self.nal)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def nasing(self):
+        self.nas += (self.nas/32)*self.stas
+        self.nas = int(self.nas)
+        if self.vnas < 0.2:
+            delvnas = 0.2-self.vnas
+            self.vnas += delvnas / 4
+            self.vnas = round(self.vnas, 4)
+            config["r" + str(self.num)]["vnas"] = str(self.vnas)
+        config["r"+str(self.num)]["nas"] = str(self.nas)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def dworing(self):
+        for dwor in d:
+            if dwor.num == self.dvorn:
+                self.dwor = dwor
+                break
+    def stasing(self):
+        stas = self.dwor.kazn/(10*self.nas)/len(self.dwor.regs)
+        delstas = stas-self.stas
+        self.stas+=delstas/2
+        self.stas=round(self.stas,4)
+
+        if self.stas > 1:
+            self.stas = 1
+        config["r"+str(self.num)]["stas"] = str(self.stas)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    async def stroing(self):
+        if self.drugst > 0:
+            self.drugst-=1
+            if self.drugst == 0:
+                self.drugur+=1
+                config["r"+str(self.num)]["drugur"] = str(self.drugur)
+                await log.send("В "+self.name+" построили ювелирную мастерскую")
+            config["r"+str(self.num)]["drugst"] = str(self.drugst)
+        if self.zhelst > 0:
+            self.zhelst-=1
+            if self.zhelst == 0:
+                self.zhelur+=1
+                config["r"+str(self.num)]["zhelur"] = str(self.zhelur)
+                await log.send("В "+self.name+" построили железную шахту")
+            config["r"+str(self.num)]["zhelst"] = str(self.zhelst)
+        if self.myedst > 0:
+            self.myedst-=1
+            if self.myedst == 0:
+                self.myedur+=1
+                config["r"+str(self.num)]["myedur"] = str(self.myedur)
+                await log.send("В "+self.name+" построили медную шахту")
+            config["r"+str(self.num)]["myedst"] = str(self.myedst)
+        if self.olovst > 0:
+            self.olovst-=1
+            if self.olovst == 0:
+                self.olovur+=1
+                config["r"+str(self.num)]["olovur"] = str(self.olovur)
+                await log.send("В "+self.name+" построили оловянную шахту")
+            config["r"+str(self.num)]["olovst"] = str(self.olovst)
+        if self.ugolst > 0:
+            self.ugolst-=1
+            if self.ugolst == 0:
+                self.ugolur+=1
+                config["r"+str(self.num)]["ugolur"] = str(self.ugolur)
+                await log.send("В "+self.name+" построили угольную шахту")
+            config["r"+str(self.num)]["ugolst"] = str(self.ugolst)
+        if self.drewst > 0:
+            self.drewst-=1
+            if self.drewst == 0:
+                self.drewur+=1
+                config["r"+str(self.num)]["drewur"] = str(self.drewur)
+                await log.send("В "+self.name+" построили лесопилку")
+            config["r"+str(self.num)]["drewst"] = str(self.drewst)
+        if self.torfst > 0:
+            self.torfst-=1
+            if self.torfst == 0:
+                self.torfur+=1
+                config["r"+str(self.num)]["torfur"] = str(self.torfur)
+                await log.send("В "+self.name+" построили торфянник")
+            config["r"+str(self.num)]["torfst"] = str(self.torfst)
+        if self.myasst > 0:
+            self.myasst-=1
+            if self.myasst == 0:
+                self.myasur+=1
+                config["r"+str(self.num)]["myasur"] = str(self.myasur)
+                await log.send("В "+self.name+" построили озотничьи угодня")
+            config["r"+str(self.num)]["myasst"] = str(self.myasst)
+        if self.rastst > 0:
+            self.rastst-=1
+            if self.rastst == 0:
+                self.rastur+=1
+                config["r"+str(self.num)]["rastur"] = str(self.rastur)
+                await log.send("В "+self.name+" построили ферму")
+            config["r"+str(self.num)]["rastst"] = str(self.rastst)
+        if self.dospst > 0:
+            self.dospst-=1
+            if self.dospst == 0:
+                self.dospur+=1
+                config["r"+str(self.num)]["dospur"] = str(self.dospur)
+                await log.send("В "+self.name+" построили доспешную мастерскую (или нет)")
+            config["r"+str(self.num)]["dospst"] = str(self.dospst)
+        if self.instst > 0:
+            self.instst-=1
+            if self.instst == 0:
+                self.instur+=1
+                config["r"+str(self.num)]["instur"] = str(self.instur)
+                await log.send("В "+self.name+" построили кузнецу (или нет)")
+            config["r"+str(self.num)]["instst"] = str(self.instst)
+        if self.skotst > 0:
+            self.skotst-=1
+            if self.skotst == 0:
+                self.skotur+=1
+                config["r"+str(self.num)]["skotur"] = str(self.skotur)
+                await log.send("В "+self.name+" построили (че) пастбище")
+            config["r"+str(self.num)]["skotst"] = str(self.skotst)
+        self.mekhur = self.myasur
+        config["r"+str(self.num)]["mekhur"] = str(self.mekhur)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def proizvoding(self):
+        self.drug = unnoling(self.drugur*1*self.koef)
+        config["r" + str(self.num)]["drug"] = str(self.drug)
+        self.zhel = unnoling(self.zhelur*2*self.koef)
+        config["r" + str(self.num)]["zhel"] = str(self.zhel)
+        self.myed = unnoling(self.myedur*2*self.koef)
+        config["r" + str(self.num)]["myed"] = str(self.myed)
+        self.olov = unnoling(self.olovur*2*self.koef)
+        config["r" + str(self.num)]["olov"] = str(self.olov)
+        self.ugol = unnoling(self.ugolur*2*self.koef)
+        config["r" + str(self.num)]["ugol"] = str(self.ugol)
+        self.drew = unnoling(self.drewur*3*self.koef)
+        config["r" + str(self.num)]["drew"] = str(self.drew)
+        self.torf = unnoling(self.torfur*3*self.koef)
+        config["r" + str(self.num)]["torf"] = str(self.torf)
+        self.myas = unnoling(self.myasur*3*self.koef)
+        config["r" + str(self.num)]["myas"] = str(self.myas)
+        self.mekh = unnoling(self.mekhur*1*self.koef)
+        config["r" + str(self.num)]["mekh"] = str(self.mekh)
+        self.rast = unnoling(self.rastur*3*self.koef)
+        config["r" + str(self.num)]["rast"] = str(self.rast)
+        self.dosp = unnoling(self.dospur*1*self.koef) - self.bronzing()
+        config["r" + str(self.num)]["dosp"] = str(self.dosp)
+        self.olov -= self.dosp
+        self.myed -= self.dosp*2
+        config["r" + str(self.num)]["myed"] = str(self.myed)
+        config["r" + str(self.num)]["olov"] = str(self.olov)
+        self.inst = unnoling(self.instur*1*self.koef) - self.zheling()
+        config["r" + str(self.num)]["inst"] = str(self.inst)
+        self.zhel -= self.inst
+        config["r" + str(self.num)]["zhel"] = str(self.zhel)
+        self.skot = unnoling(self.skotur*3*self.koef)
+        config["r" + str(self.num)]["skot"] = str(self.skot)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def stroi(self, chto):
+        print(self.dwor.kazn)
+        if chto == "ювелирную мастерскую" and self.drugur != -1 and self.drugst == 0 and self.dwor.kazn >= 20000:
+            self.drugst = 1
+            self.dwor.kazn-=20000
+            config["r"+str(self.num)]["drugst"] = str(self.drugst)
+        elif chto == "железную шахту" and self.zhelur != -1 and self.zhelst == 0 and self.dwor.kazn >= 15000:
+            self.zhelst = 1
+            self.dwor.kazn-=15000
+            config["r"+str(self.num)]["zhelst"] = str(self.zhelst)
+        elif chto == "оловянную шахту" and self.olovur != -1 and self.olovst == 0 and self.dwor.kazn >= 15000:
+            self.olovst = 1
+            self.dwor.kazn-=15000
+            config["r"+str(self.num)]["olovst"] = str(self.olovst)
+        elif chto == "медную шахту" and self.myedur != -1 and self.myedst == 0 and self.dwor.kazn >= 15000:
+            print(self.myedst)
+            self.myedst = 1
+            self.dwor.kazn-=15000
+            config["r"+str(self.num)]["myedst"] = str(self.myedst)
+        elif chto == "угольную шахту" and self.ugolur != -1 and self.ugolst == 0 and self.dwor.kazn >= 15000:
+            self.ugolst = 1
+            self.dwor.kazn-=15000
+            config["r"+str(self.num)]["ugolst"] = str(self.ugolst)
+        elif chto == "лесопилку" and self.drewur != -1 and self.drewst == 0 and self.dwor.kazn >= 10000:
+            self.drewst = 1
+            self.dwor.kazn-=10000
+            config["r"+str(self.num)]["drewst"] = str(self.drewst)
+        elif chto == "торфянник" and self.torfur != -1 and self.torfst == 0 and self.dwor.kazn >= 10000:
+            self.torfst = 1
+            self.dwor.kazn-=10000
+            config["r"+str(self.num)]["torfst"] = str(self.torfst)
+        elif chto == "охотничьи угодья" and self.myasur != -1 and self.myasst == 0 and self.dwor.kazn >= 10000:
+            self.myasst = 1
+            self.dwor.kazn-=10000
+            config["r"+str(self.num)]["myasst"] = str(self.myasst)
+        elif chto == "ферму" and self.rastur != -1 and self.rastst == 0 and self.dwor.kazn >= 10000:
+            self.rastst = 1
+            self.dwor.kazn-=10000
+            config["r"+str(self.num)]["rastst"] = str(self.rastst)
+        elif chto == "пастбище" and self.skotur != -1 and self.skotst == 0 and self.dwor.kazn >= 10000:
+            self.skotst = 1
+            self.dwor.kazn-=10000
+            config["r"+str(self.num)]["skotst"] = str(self.skotst)
+        elif chto == "бронницу" and self.dospur != -1 and self.dospst == 0 and self.dwor.kazn >= 20000:
+            self.dospst = 1
+            self.dwor.kazn-=20000
+            config["r"+str(self.num)]["dospst"] = str(self.dospst)
+        elif chto == "кузницу" and self.instur != -1 and self.instst == 0 and self.dwor.kazn >= 20000:
+            self.instst = 1
+            self.dwor.kazn-=20000
+            config["r"+str(self.num)]["instst"] = str(self.instst)
+        else:
+            return "Извините, мы не можем себе это позволить"
+        print(self.dwor.kazn)
+        config["d"+str(self.dwor.num)]["kazn"] = str(self.dwor.kazn)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+        return "Как пожелаете"
+
+    def bronzing(self):
+        maxmyed = int(self.myed/2)
+        maxolov = self.olov - maxmyed
+        if maxolov < 0:
+            maxmyed+=maxolov
+        if maxmyed >= self.dospur*1*self.koef:
+            return 0
+        return self.dospur*1*self.koef - maxmyed
+    def zheling(self):
+        if self.zhel >= self.instur*1*self.koef:
+            return 0
+        return self.instur*1*self.koef - self.zhel
+def unnoling(varik):
+        if varik <= 0:
+            return 0
+        return varik
+class Dworin(object):
+    def __init__(self,shit):
+        self.num = int(shit['num'])
+        self.igid = int(shit['igid'])
+        self.name = str(shit['name'])
+        self.frak = str(shit['frak'])
+        self.kazn = int(shit['kazn'])
+
+        self.drug = int(shit['drug'])
+        self.zhel = int(shit['zhel'])
+        self.myed = int(shit['myed'])
+        self.olov = int(shit['olov'])
+        self.ugol = int(shit['ugol'])
+        self.drew = int(shit['drew'])
+        self.torf = int(shit['torf'])
+        self.myas = int(shit['myas'])
+        self.mekh = int(shit['mekh'])
+        self.rast = int(shit['rast'])
+        self.dosp = int(shit['dosp'])
+        self.inst = int(shit['inst'])
+        self.skot = int(shit['skot'])
+        self.sklads = (self.drug + self.zhel + self.myed + self.olov + self.ugol + self.drew
+                       + self.torf + self.myas * 2 + self.mekh + self.rast + self.dosp + self.inst + self.skot * 2) * 5
+        self.posil = chisling(str(shit['posil']).split())
+
+        self.kres = int(shit['kres'])
+        self.pekh = int(shit['pekh'])
+        self.kope = int(shit['kope'])
+        self.kava = int(shit['kava'])
+        self.luch = int(shit['luch'])
+        self.army = self.kres + self.pekh + self.kope + self.kava + self.luch
+        self.armest = int(shit['armest'])
+    regs = 0
+    regsname = ""
+    def raspussing(self):
+        if self.army == 0:
+            return "У нас нет войска, господин."
+        for reg in self.regs:
+            vnas = int(reg.nas * reg.vnas)
+            mnas = reg.nas - vnas
+            reg.nas += int(self.army*50/len(self.regs))
+            vnas += int(self.army*50/len(self.regs))
+            reg.vnas = round(vnas / reg.nas, 4)
+            config["r" + str(reg.num)]["nas"] = str(reg.nas)
+            config["r" + str(reg.num)]["vnas"] = str(reg.vnas)
+        self.dosp += self.pekh*40+self.kope*35+self.kava*50+self.luch*25
+        self.inst += self.pekh * 50 + self.kope * 50 + self.kava * 50 + self.luch * 50
+        self.skot += self.kava*50
+        self.kres = 0
+        self.pekh = 0
+        self.kope = 0
+        self.kava = 0
+        self.luch = 0
+        config["d" + str(self.num)]["dosp"] = str(self.dosp)
+        config["d" + str(self.num)]["inst"] = str(self.inst)
+        config["d" + str(self.num)]["skot"] = str(self.skot)
+        config["d" + str(self.num)]["kres"] = str(self.kres)
+        config["d" + str(self.num)]["pekh"] = str(self.pekh)
+        config["d" + str(self.num)]["kope"] = str(self.kope)
+        config["d" + str(self.num)]["kava"] = str(self.kava)
+        config["d" + str(self.num)]["luch"] = str(self.luch)
+        return "Мужики разошлись по домам."
+    def posiling(self, chto):
+        chto=chto.split()
+        chto[1]=int(chto[1])
+        if chto[0].startswith('<@!') or chto[0].startswith('<@&'):
+            chto[0] = int(chto[0][3:-1])
+        elif chto[0].startswith('<@'):
+            chto[0] = int(chto[0][2:-1])
+        else:
+            return "Кому?"
+        for dwor in d:
+            if dwor.igid == chto[0]:
+                i = 1
+                break
+            i = 0
+        if i == 0:
+            return "Кому?"
+        if chto[2] == "драгоценностей" and self.drug >= chto[1] and self.kazn >= chto[1]*15:
+            self.drug -= chto[1]
+            config["d"+str(self.num)]["drug"] = str(self.drug)
+        elif chto[2] == "железа" and self.zhel >= chto[1] and self.kazn >= chto[1]*15:
+            self.zhel -= chto[1]
+            config["d" + str(self.num)]["zhel"] = str(self.zhel)
+        elif chto[2] == "олова" and self.olov >= chto[1] and self.kazn >= chto[1]*15:
+            self.olov -= chto[1]
+            config["d"+str(self.num)]["olov"] = str(self.olov)
+        elif chto[2] == "меди" and self.myed >= chto[1] and self.kazn >= chto[1]*15:
+            self.myed -= chto[1]
+            config["d"+str(self.num)]["myed"] = str(self.myed)
+        elif chto[2] == "угля" and self.ugol >= chto[1] and self.kazn >= chto[1]*15:
+            self.ugol -= chto[1]
+            config["d"+str(self.num)]["ugol"] = str(self.ugol)
+        elif chto[2] == "древесины" and self.drew >= chto[1] and self.kazn >= chto[1]*15:
+            self.drew -= chto[1]
+            config["d"+str(self.num)]["drew"] = str(self.drew)
+        elif chto[2] == "торфа" and self.torf >= chto[1] and self.kazn >= chto[1]*15:
+            self.torf -= chto[1]
+            config["d"+str(self.num)]["torf"] = str(self.torf)
+        elif chto[2] == "мяса" and self.myas >= chto[1] and self.kazn >= chto[1]*15:
+            self.myas -= chto[1]
+            config["d"+str(self.num)]["myas"] = str(self.myas)
+        elif chto[2] == "меха" and self.mekh >= chto[1] and self.kazn >= chto[1]*15:
+            self.mekh -= chto[1]
+            config["d"+str(self.num)]["mekh"] = str(self.mekh)
+        elif chto[2] == "зерна" and self.rast >= chto[1] and self.kazn >= chto[1]*15:
+            self.rast -= chto[1]
+            config["d"+str(self.num)]["rast"] = str(self.rast)
+        elif chto[2] == "животины" and self.skot >= chto[1] and self.kazn >= chto[1]*15:
+            self.skot -= chto[1]
+            config["d"+str(self.num)]["skot"] = str(self.skot)
+        elif chto[2] == "доспехов" and self.dosp >= chto[1] and self.kazn >= chto[1]*15:
+            self.dosp -= chto[1]
+            config["d"+str(self.num)]["dosp"] = str(self.dosp)
+        elif chto[2] == "орудий" and self.inst >= chto[1] and self.kazn >= chto[1]*15:
+            self.inst -= chto[1]
+            config["d"+str(self.num)]["inst"] = str(self.inst)
+        else:
+            return "Сожалею, у нас такого нет."
+        self.posil.extend(chto)
+        config["d"+str(self.num)]["posil"] = str(" ".join(stringing(self.posil)))
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+        self.posil = chisling(self.posil)
+        return "Всё дойдет в лучшем виде."
+    async def dostaving(self):
+        ii = 0
+        chto = [0,1]
+        while 1 < len(self.posil):
+            print(self.posil)
+            if ii == 0:
+                print(self.posil[1])
+                for dwor in d:
+                    print(dwor.igid)
+                    if int(self.posil[1]) == int(dwor.igid):
+                        print("Да неужели")
+                        ii = 1
+                        del self.posil[1]
+                        break
+                if ii == 0:
+                    print("wtf")
+                    break
+            elif ii == 1:
+                print(self.posil[1])
+                chto[0] = self.posil[1]
+                ii = 2
+                del self.posil[1]
+            elif ii == 2:
+                print(self.posil[1])
+                chto[1] = self.posil[1]
+                del self.posil[1]
+                print(dwor.igid,chto)
+                if chto[1] == "драгоценностей":
+                    dwor.drug += chto[0]
+                    config["d" + str(dwor.num)]["drug"] = str(dwor.drug)
+                elif chto[1] == "железа":
+                    dwor.zhel += chto[0]
+                    config["d" + str(dwor.num)]["zhel"] = str(dwor.zhel)
+                elif chto[1] == "олова":
+                    dwor.olov += chto[0]
+                    config["d" + str(dwor.num)]["olov"] = str(dwor.olov)
+                elif chto[1] == "меди":
+                    dwor.myed += chto[0]
+                    config["d" + str(dwor.num)]["myed"] = str(dwor.myed)
+                elif chto[1] == "угля":
+                    dwor.ugol += chto[0]
+                    config["d" + str(dwor.num)]["ugol"] = str(dwor.ugol)
+                elif chto[1] == "древесины":
+                    dwor.drew += chto[0]
+                    config["d" + str(dwor.num)]["drew"] = str(dwor.drew)
+                elif chto[1] == "торфа":
+                    dwor.torf += chto[0]
+                    config["d" + str(dwor.num)]["torf"] = str(dwor.torf)
+                elif chto[1] == "меха":
+                    dwor.myas += chto[0]
+                    config["d" + str(dwor.num)]["myas"] = str(dwor.myas)
+                elif chto[1] == "мяса":
+                    dwor.myas += chto[0]
+                    config["d" + str(dwor.num)]["myas"] = str(dwor.myas)
+                elif chto[1] == "зерна":
+                    dwor.rast += chto[0]
+                    config["d" + str(dwor.num)]["rast"] = str(dwor.rast)
+                elif chto[1] == "животины":
+                    dwor.skot += chto[0]
+                    config["d" + str(dwor.num)]["skot"] = str(dwor.skot)
+                elif chto[1] == "доспехов":
+                    dwor.dosp += chto[0]
+                    config["d" + str(dwor.num)]["dosp"] = str(dwor.dosp)
+                elif chto[1] == "орудий":
+                    dwor.inst += chto[0]
+                    config["d" + str(dwor.num)]["inst"] = str(dwor.inst)
+                else:
+                    chto[1] = "фиг"
+                ch = client.get_channel(dwor.regs[0].chid)
+                await ch.send("Господин "+self.name+" прислал вам "+str(chto[0])+" "+chto[1])
+                ii = 0
+        config["d" + str(self.num)]["posil"] = str(" ".join(stringing(self.posil)))
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def nameing(self):
+        if self.igid == 0 or not client.get_user(self.igid):
+            return
+        if ser.get_member(self.igid).nick == None:
+            if self.name == ser.get_member(self.igid).name:
+                return
+            self.name = ser.get_member(self.igid).name
+        else:
+            if self.name == ser.get_member(self.igid).nick:
+                return
+            self.name = ser.get_member(self.igid).nick
+        config["d"+str(self.num)]["name"] = str(self.name)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    def reging(self):
+        self.regs = []
+        self.regsname = ""
+        for reg in r:
+            if reg.dvorn == self.num:
+                self.regs.append(reg)
+                self.regsname += reg.name+", "
+        if len(self.regs) == 0:
+            self.regs = 0
+            return 0
+        self.regsname = self.regsname[:-2]
+    def naloging(self):
+        if self.regs == 0:
+            return 0
+        for reg in self.regs:
+            self.kazn += reg.nal - reg.ras
+        self.kazn = int(self.kazn)
+        config["d"+str(self.num)]["kazn"] = str(self.kazn)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+    async def finansing(self):
+        self.kazn -= self.sklads
+        jrat = self.army+self.kava
+        eda = self.myas+self.rast
+        if jrat > eda:
+            ch = client.get_channel(self.regs[0].chid)
+            await ch.send("Нам нечем кормить войско!")
+            await log.send(self.name+" нечем кормить войско")
+            self.myas = 0
+            self.rast = 0
+        else:
+            self.myas -= jrat
+            if self.myas < 0:
+                self.rast += self.myas
+                self.myas = 0
+        config["d" + str(self.num)]["myas"] = str(self.myas)
+        config["d" + str(self.num)]["rast"] = str(self.rast)
+        if self.kazn <= 0:
+            ch = client.get_channel(self.regs[0].chid)
+            await ch.send("Сёр... Казна пуста...")
+            await log.send(self.name+" проебал все деньги, пиздим его.")
+            self.kazn = 1
+        config["d"+str(self.num)]["kazn"] = str(self.kazn)
+        with open(configPath, 'w') as configfile:
+            config.write(configfile)
+
+def chisling(listt):
+    lis = []
+    for i in range(len(listt)):
+        if str(listt[i]).isdigit():
+            lis.append(int(listt[i]))
+        else:
+            lis.append(listt[i])
+    return lis
+def stringing(listt):
+    lis = []
+    for i in range(len(listt)):
+        lis.append(str(listt[i]))
+    return lis
+
+async def comaning(message):
+    print("Командос:",coman)
+    global zaeb
+    zaeb -= 1
+    if zaeb <= 0:
+        zaeb += 1
+    if not coman:
+        await message.channel.send(random.choice(['Да, мой лорд',"Конечно, мой лорд","Да-да?","Как скажете, милорд",
+                                                  "Долгоносик пожрал урожай, милорд"]))
+    elif coman.startswith('угадай '):
+        if coman[7:].find(" ") != -1 and coman[7:].replace(' ', '').isdigit():
+            rx1 = int(coman[7:].rpartition(' ')[0])
+            rx2 = int(coman[7:].rpartition(' ')[2])
+            await message.channel.send(random.randint(rx1,rx2))
+        elif coman[7:].isdigit():
+            rx = int(coman[7:])
+            await message.channel.send(random.randint(1,rx))
+        else:
+            rxx = coman[7:].split('; ')
+            await message.channel.send(random.choice(rxx))
+    elif coman.startswith('обнови записи') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        await message.channel.send("Ваша воля")
+        await confread()
+    elif coman.startswith('ходим') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        await message.channel.send("Наступает "+str(khod)+" месяц с начала конца")
+        await khoding()
+    elif coman.startswith('скажи '):
+            await message.delete()
+            await message.channel.send(coman[6:])
+            message.id = message.channel.last_message.id
+    elif coman.startswith('отчет по ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        n = int(coman.lstrip("отчет по "))
+        await message.channel.send(otchet(n))
+    elif coman.startswith('как у меня дела?'):
+        for dwor in d:
+            if dwor.igid == message.author.id:
+                await message.channel.send("Вы присягнули на верность государству "+dwor.frak+
+                                           "\nВаша казна - "+str(dwor.kazn)+" крон"+
+                                           "\nЗемли под вашим контролем: "+str(dwor.regsname)+
+                                           "\nОбщее войско - "+str(dwor.army)+" мужей"+
+                                           "\nКрестьян - "+str(dwor.kres)+
+                                           "\nПехоты - "+str(dwor.pekh)+
+                                           "\nКопейщиков - "+str(dwor.kope)+
+                                           "\nКавалерии - "+str(dwor.kava)+
+                                           "\nЛучников - "+str(dwor.luch)+
+                                           "\nАрмия распологается в регионе "+str(dwor.armest)+
+                                           "\n"+sklad(dwor))
+                break
+    elif coman.startswith('расскажи про ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        kto = coman[13:]
+        if kto.startswith('<@!'):
+            aidi = int(kto[3:-1])
+        elif kto.startswith('<@'):
+            aidi = int(kto[2:-1])
+        else:
+            await message.channel.send("Про кого?")
+            aidi = "Хуй"
+        if aidi != "Хуй":
+            for dwor in d:
+                if dwor.igid == aidi:
+                    await message.channel.send("Есть такой ~~подор~~, дворянин из страны "+dwor.frak+
+                                               ":\nКазна его - "+str(dwor.kazn)+" крон"+
+                                               "\nПравит: "+str(dwor.regsname)+
+                                               "\nВойска - "+str(dwor.army)+" мужей"+
+                                               "\nКрестьян - "+str(dwor.kres)+
+                                               "\nПехоты - "+str(dwor.pekh)+
+                                               "\nКопейщиков - "+str(dwor.kope)+
+                                               "\nКавалерии - "+str(dwor.kava)+
+                                               "\nЛучников - "+str(dwor.luch)+
+                                               "\nВсема в регионе нуммер "+str(dwor.armest)+
+                                               "\n"+sklad(dwor)
+                                               )
+                    break
+    elif coman.startswith('отчет') or coman.startswith('отчёт'):
+        for reg in r:
+            if reg.chid == message.channel.id:
+                await message.channel.send(otchet(reg.num))
+                break
+    elif coman.startswith('построй '):
+        chto = coman[8:]
+        for reg in r:
+            if reg.chid == message.channel.id:
+                await message.channel.send(reg.stroi(chto))
+                break
+    elif coman.startswith('выкупи '):
+        chto = coman[7:]
+        for reg in r:
+            if reg.chid == message.channel.id:
+                await message.channel.send(reg.getting(chto))
+                break
+    elif coman.startswith('отдай людям '):
+        chto = coman[12:]
+        for reg in r:
+            if reg.chid == message.channel.id:
+                await message.channel.send(reg.ottdaching(chto))
+                break
+    elif coman.startswith('отправь '):
+        chto = coman[8:]
+        for dwor in d:
+            if dwor.igid == message.author.id:
+                await message.channel.send(dwor.posiling(chto))
+                break
+    elif coman.startswith('найми '):
+        chto = coman[6:]
+        for reg in r:
+            if reg.chid == message.channel.id:
+                await message.channel.send(reg.naeming(chto))
+                break
+    elif coman.startswith('распусти войско'):
+        for dwor in d:
+            if dwor.igid == message.author.id:
+                await message.channel.send(dwor.raspussing())
+                break
+    elif coman.startswith('отчисти ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        ster = int(coman[8:])
+        messas = await message.channel.purge(limit=ster)
+        await message.channel.delete_messages(messas)
+    elif coman.endswith("?"):
+        zaeb += 1
+        await message.channel.send(random.choice(
+            ["Мне это неизвестно.",
+             "Определенно.",
+             "Безусловно.",
+             "Сожалею, но нет.",
+             "Звезды говорят обратное.",
+             "Откуда нам знать?"]))
+    else:
+        zaeb +=2
+        print(zaeb)
+        if zaeb > 4 and zaeb <= 6:
+            await message.channel.send("...")
+        elif zaeb > 6:
+            zaeb -=1
+        else:
+            await message.channel.send(random.choice(['Ты думаешь, моя работа здесь это "'+coman+'"?',
+                                                      "А ключ от замка, где злато лежит, тебе не дать?",
+                                                      "Я за такое не голосовал, милорд."]))
+def otchet(n):
+    print("ootcot")
+    otch = (str(r[n].name)+
+            "\nРегион номер "+str(n)+":\nХозяин - "+str(r[n].dwor.name)+
+            "\nНаселение - "+str(r[n].nas)+" душ"+
+            "\nДовольство населения - "+str(r[n].stas*100)+"%"+
+            "\nДоход от налогов - "+str(r[n].nal)+" крон"+
+            "\nРасходы - "+str(r[n].ras)+" крон"+
+            "\nВоеннообязанное население - "+str(r[n].vnas*100)+"%")
+    if r[n].drugur >= 0 or r[n].drug > 0:
+        otch+="\nДобыча драгоценностей - "+str(r[n].drug)+" ("+str(r[n].drugur)+" уровень)"
+    if r[n].zhelur >= 0 or r[n].zhel > 0:
+        otch+="\nДобыча железа - "+str(r[n].zhel)+" ("+str(r[n].zhelur)+" уровень)"
+    if r[n].myedur >= 0 or r[n].myed > 0:
+        otch+="\nДобыча меди - "+str(r[n].myed)+" ("+str(r[n].myedur)+" уровень)"
+    if r[n].olovur >= 0 or r[n].olov > 0:
+        otch+="\nДобыча олова - "+str(r[n].olov)+" ("+str(r[n].olovur)+" уровень)"
+    if r[n].ugolur >= 0 or r[n].ugol > 0:
+        otch+="\nДобыча угля - "+str(r[n].ugol)+" ("+str(r[n].ugolur)+" уровень)"
+    if r[n].drewur >= 0 or r[n].drew > 0:
+        otch+="\nДобыча древесины - "+str(r[n].drew)+" ("+str(r[n].drewur)+" уровень)"
+    if r[n].torfur >= 0 or r[n].torf > 0:
+        otch+="\nДобыча торфа - "+str(r[n].torf)+" ("+str(r[n].torfur)+" уровень)"
+    if r[n].myasur >= 0 or r[n].myas > 0:
+        otch+="\nДобыча мяса - "+str(r[n].myas)+" ("+str(r[n].myasur)+" уровень)"
+    if r[n].mekhur >= 0 or r[n].mekh > 0:
+        otch+="\nДобыча меха - "+str(r[n].mekh)+" ("+str(r[n].mekhur)+" уровень)"
+    if r[n].rastur >= 0 or r[n].rast > 0:
+        otch+="\nПроизводство сельского хозяйства - "+str(r[n].rast)+" ("+str(r[n].rastur)+" уровень)"
+    if r[n].dospur >= 0 or r[n].dosp > 0:
+        otch+="\nПроизводство доспехов - "+str(r[n].dosp)+" ("+str(r[n].dospur)+" уровень)"
+    if r[n].instur >= 0 or r[n].inst > 0:
+        otch+="\nКузнечное производство - "+str(r[n].inst)+" ("+str(r[n].instur)+" уровень)"
+    if r[n].skotur >= 0 or r[n].skot > 0:
+        otch+="\nПроизводство животных - "+str(r[n].skot)+" ("+str(r[n].skotur)+" уровень)"
+    otch+="\nЭффективность производства - "+str(r[n].koef)
+    return otch
+def sklad(dwor):
+    skld = "На складах хранится:"
+    if dwor.drug > 0:
+        skld+="\nДрагоценности - "+str(dwor.drug)
+    if dwor.zhel > 0:
+        skld+="\nЖелезо - "+str(dwor.zhel)
+    if dwor.myed > 0:
+        skld+="\nМедь - "+str(dwor.myed)
+    if dwor.olov > 0:
+        skld+="\nОлово - "+str(dwor.olov)
+    if dwor.ugol > 0:
+        skld+="\nУголь - "+str(dwor.ugol)
+    if dwor.drew > 0:
+        skld+="\nДревесина - "+str(dwor.drew)
+    if dwor.torf > 0:
+        skld+="\nТорф - "+str(dwor.torf)
+    if dwor.myas > 0:
+        skld+="\nМясо - "+str(dwor.myas)
+    if dwor.mekh > 0:
+        skld+="\nМеха - "+str(dwor.mekh)
+    if dwor.rast > 0:
+        skld+="\nЗерно - "+str(dwor.rast)
+    if dwor.dosp > 0:
+        skld+="\nДоспехи - "+str(dwor.dosp)
+    if dwor.inst > 0:
+        skld+="\nОрудия - "+str(dwor.inst)
+    if dwor.skot > 0:
+        skld+="\nЖивотина - "+str(dwor.skot)
+    return skld
+async def background_task():
+    await client.wait_until_ready()
+    counter = 0
+    """
+    channel = client.get_channel(866307805270638656) # Insert channel ID here
+    while not client.is_closed():
+        counter += 1
+        await channel.send(counter)
+        await asyncio.sleep(random.uniform(0, 20))
+"""
+@client.event
+async def on_ready():
+    global ser
+    global sov
+    global log
+    ser = client.guilds[0]
+    sov = ser.get_role(888097787223367711)
+    log = client.get_channel(896418762398523463)
+    await confread()
+    print('We have logged in as {0.user}'.format(client))
+@client.event
+async def on_message(message):
+    #print(message.content)
+    if message.author == client.user:
+        global premes
+        premes = message
+        return
+    """
+    await message.delete()
+    await message.channel.send("Шизойд сказал: "+message.content)
+    message.id = message.channel.last_message.id
+    """
+    if message.content.startswith('%слы'):
+        await message.channel.send(random.choice(['Hello!',"Факю","Че","Я каменщик, работаю три дня!","Екх..."]))
+    if message.content.startswith('%name'):
+        await message.channel.send(client.user)
+        await message.channel.send(message.author)
+    if message.content.startswith('3* ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+            await message.delete()
+            await message.channel.send(message.content[3:])
+            message.id = message.channel.last_message.id
+    if message.content.startswith('4* ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        await message.delete()
+        mess = message
+        print(message.content[3:21])
+        if message.content[3:21].isdigit():
+            mess.id = int(message.content[3:21])
+            await mess.edit(content=message.content[22:])
+        else:
+            try:
+                mess = premes
+                await mess.edit(content=message.content[3:])
+            except NameError:
+                print("[eq")
+    if message.content.startswith('6*'):
+        if message.content.find(" ") != -1 and message.content[2:].replace(' ', '').isdigit():
+            rx1 = int(message.content[2:].rpartition(' ')[0])
+            rx2 = int(message.content[2:].rpartition(' ')[2])
+            await message.channel.send(random.randint(rx1,rx2))
+        elif message.content[2:].isdigit():
+            rx = int(message.content[2:])
+            await message.channel.send(random.randint(1,rx))
+        else:
+            rxx = message.content[2:].split('; ')
+            await message.channel.send(random.choice(rxx))
+    if message.content.startswith('5*отчисти ') and message.author.guild.get_role(864883738948141079) in message.author.roles:
+        ster = int(message.content[10:])
+        messas = []
+        messas = await message.channel.purge(limit=ster)
+        await message.channel.delete_messages(messas)
+    global coman
+    if message.content.startswith("<@!888063511169740841>, "):
+        coman = message.content[24:]
+        await comaning(message)
+    elif message.content.startswith("<@888063511169740841>, "):
+        coman = message.content[23:]
+        await comaning(message)
+    elif message.content.startswith("<@888063511169740841>"):
+        coman = message.content[22:]
+        await comaning(message)
+    elif message.content.startswith("<@!888063511169740841>"):
+        coman = message.content[23:]
+        await comaning(message)
+    elif message.content.startswith(sov.mention+", "):
+        coman = message.content.lstrip(sov.mention+", ")
+        await comaning(message)
+    elif message.content.startswith(sov.mention):
+        coman = message.content.lstrip(sov.mention+" ")
+        await comaning(message)
+    elif message.content.startswith("Советник, "):
+        coman = message.content[10:]
+        await comaning(message)
+    """
+    message.id = 866316319099846666
+    message.channel = client.get_channel(866307805270638656)
+    await message.edit(content=str(ia)+"ass "+str(ir)+"ree")
+    """
+#client.loop.create_task(background_task())
+client.run("")
